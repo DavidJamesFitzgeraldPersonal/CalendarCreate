@@ -4,11 +4,18 @@
     {
         public ushort _value { get; }
         public bool _isLeap { get; }
+        public Month[] _months { get; }
 
         public Year(ushort value)
         {
             _value = value;
             _isLeap = IsALeapYear(value);
+
+            _months = new Month[(ushort)Month.eMONTHS.COUNT];
+            for (ushort i = 0; i < _months.Length; i++)
+            {
+                _months[i] = new Month(i, _isLeap);
+            }
         }
 
         /**
