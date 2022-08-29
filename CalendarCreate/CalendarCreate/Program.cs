@@ -2,28 +2,41 @@
 {
     class Program
     {
+        const int FILE_NAME_MAX_LENGTH = 100; /*TODO - Move me to a file handler class*/
+        const int LOWEST_DATE_ALLOWABLE = 1582;
         static int Main(string[] args)
         {
-            const int FILE_NAME_MAX_LENGTH = 100;
+            
             int status = 0;
 
-            if (2 != args.Length)
+#if TEST
+            Test testRunner = new Test();
+            testRunner.RunAll();
+#else
+            status = ParseUserInput(args);
+#endif
+            return status;
+        }
+
+        public static int ParseUserInput(string[] args)
+        {
+            if ((null == args) || (2u != args.Length))
             {
-                status = ErrorHandler.HandleError(ErrorHandler.eERRORS.USAGE);
+                return ErrorHandler.HandleError(ErrorHandler.eERRORS.USAGE);
             }
             else
             {
                 /* Ensure the year entered is in a usable range - Top End ?*/
                 int tempYear = 0;
-                if ((false == int.TryParse(args[0], out tempYear)) || (tempYear < 1582))
+                if ((false == int.TryParse(args[0], out tempYear)) || (tempYear < LOWEST_DATE_ALLOWABLE))
                 {
-                    status = ErrorHandler.HandleError(ErrorHandler.eERRORS.YEAR);
+                    return ErrorHandler.HandleError(ErrorHandler.eERRORS.YEAR);
                 }
 
                 /* Ensure the length of the filename is sensible - This is an abitrary limit! */
-                if (args[1].Length > FILE_NAME_MAX_LENGTH)
+                if ((args[1].Length > FILE_NAME_MAX_LENGTH) || (args[1].Length <= 0u))
                 {
-                    status = ErrorHandler.HandleError(ErrorHandler.eERRORS.FILE_LENGTH);
+                    return ErrorHandler.HandleError(ErrorHandler.eERRORS.FILE_LENGTH);
                 }
 
                 /* Ensure the file name entered is formatted correctly*/
@@ -32,13 +45,12 @@
                 {
                     if (args[1].Contains(c))
                     {
-                        status = ErrorHandler.HandleError(ErrorHandler.eERRORS.FILE_NAME);
-                        break;
+                        return ErrorHandler.HandleError(ErrorHandler.eERRORS.FILE_NAME);
                     }
                 }
-
             } //if (2 != args.Length)
-            return status;
+            
+            return 0;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace CalendarCreate
 
         public static int HandleError(eERRORS type)
         {
+#if !TEST
             switch(type)
             {
                 case eERRORS.USAGE:
@@ -38,7 +39,7 @@ namespace CalendarCreate
                     Console.WriteLine("Unhandled Error!");
                     break;
             }
-
+#endif
             return (int)type;
         }
     }
