@@ -4,6 +4,7 @@
     {
         const int FILE_NAME_MAX_LENGTH = 100; /*TODO - Move me to a file handler class*/
         const int LOWEST_DATE_ALLOWABLE = 1582;
+
         static int Main(string[] args)
         {
             
@@ -18,7 +19,18 @@
             return status;
         }
 
+        /**
+         * Determine if the user input is valid for the program.
+         * 
+         * \args array of user input strings. The program expects two inputs, a decimal year greater than 1582
+         *      and a file name of less than 100 characters.
+         * \return int 0 if valid input, else NOT 0.
+         */
+#if TEST
         public static int ParseUserInput(string[] args)
+#else
+        private static int ParseUserInput(string[] args)
+#endif
         {
             if ((null == args) || (2u != args.Length))
             {

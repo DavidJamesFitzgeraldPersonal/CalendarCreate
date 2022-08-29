@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CalendarCreate
+﻿namespace CalendarCreate
 {
     static class ErrorHandler
     {
