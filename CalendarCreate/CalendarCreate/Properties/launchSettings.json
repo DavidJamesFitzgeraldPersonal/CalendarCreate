@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CalendarCreate": {
+      "commandName": "Project",
+      "commandLineArgs": "2020 myFile"
+    }
+  }
+}

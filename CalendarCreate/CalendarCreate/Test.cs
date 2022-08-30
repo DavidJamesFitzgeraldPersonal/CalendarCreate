@@ -48,7 +48,10 @@ namespace CalendarCreate
 
             string[] args = new string[0];
 
-            if (ErrorHandler.eERRORS.USAGE == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.USAGE == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test0_USAGE - PASS");
                 result = true;
@@ -66,7 +69,10 @@ namespace CalendarCreate
 
             string[] args = { "TEST" };
 
-            if (ErrorHandler.eERRORS.USAGE == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.USAGE == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test1_USAGE - PASS");
                 result = true;
@@ -84,7 +90,10 @@ namespace CalendarCreate
 
             string[] args = { "TEST", "TEST", "TEST" };
 
-            if (ErrorHandler.eERRORS.USAGE == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.USAGE == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test2_USAGE - PASS");
                 result = true;
@@ -102,7 +111,10 @@ namespace CalendarCreate
 
             string[] args = { "TEST", "TEST", "TEST", "TEST", "TEST", "TEST" };
 
-            if (ErrorHandler.eERRORS.USAGE == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.USAGE == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test2_USAGE - PASS");
                 result = true;
@@ -123,7 +135,11 @@ namespace CalendarCreate
             string[] args = new string[2];
             args[0] = "1581";
             args[1] = "TEST";
-            if (ErrorHandler.eERRORS.YEAR == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.YEAR  == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test0_YEAR - PASS");
                 result = true;
@@ -142,7 +158,11 @@ namespace CalendarCreate
             string[] args = new string[2];
             args[0] = "0";
             args[1] = "TEST";
-            if (ErrorHandler.eERRORS.YEAR == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.YEAR == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test1_YEAR - PASS");
                 result = true;
@@ -161,7 +181,11 @@ namespace CalendarCreate
             string[] args = new string[2];
             args[0] = "-1";
             args[1] = "TEST";
-            if (ErrorHandler.eERRORS.YEAR == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.YEAR == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test2_YEAR - PASS");
                 result = true;
@@ -180,7 +204,11 @@ namespace CalendarCreate
             string[] args = new string[2];
             args[0] = "a";
             args[1] = "TEST";
-            if (ErrorHandler.eERRORS.YEAR == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.YEAR == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test3_YEAR - PASS");
                 result = true;
@@ -199,7 +227,11 @@ namespace CalendarCreate
             string[] args = new string[2];
             args[0] = "FIFTEEN EIGHTY TWO";
             args[1] = "TEST";
-            if (ErrorHandler.eERRORS.YEAR == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.YEAR == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test4_YEAR - PASS");
                 result = true;
@@ -220,7 +252,11 @@ namespace CalendarCreate
             string[] args = new string[2];
             args[0] = "1582";
             args[1] = "";
-            if (ErrorHandler.eERRORS.FILE_LENGTH == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.FILE_LENGTH == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test0_FILELEN - PASS");
                 result = true;
@@ -236,19 +272,21 @@ namespace CalendarCreate
         {
             bool result = false;
 
-            char[] fileName = new char[101];
+            char[] longFileName = new char[101];
             string[] args = new string[2];
 
             for (int i = 0; i < 100; i++)
             {
-                fileName[i] = (char)'a';
+                longFileName[i] = (char)'a';
             }
 
-
             args[0] = "1582";
-            args[1] = new string(fileName);
+            args[1] = new string(longFileName);
 
-            if (ErrorHandler.eERRORS.FILE_LENGTH == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.FILE_LENGTH == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test1_FILELEN - PASS");
                 result = true;
@@ -269,7 +307,11 @@ namespace CalendarCreate
             string[] args = new string[2];
             args[0] = "1582";
             args[1] = "*";
-            if (ErrorHandler.eERRORS.FILE_NAME == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.FILE_NAME == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test0_FILENAME - PASS");
                 result = true;
@@ -288,7 +330,11 @@ namespace CalendarCreate
             string[] args = new string[2];
             args[0] = "1582";
             args[1] = "?";
-            if (ErrorHandler.eERRORS.FILE_NAME == (ErrorHandler.eERRORS)Program.ParseUserInput(args))
+
+            ushort year = 0;
+            string fileName = "";
+
+            if (ErrorHandler.eERRORS.FILE_NAME == (ErrorHandler.eERRORS)Program.ParseUserInput(args, out year, out fileName))
             {
                 Console.WriteLine("     ParseUserInput_Test1_FILENAME - PASS");
                 result = true;

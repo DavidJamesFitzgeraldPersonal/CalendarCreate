@@ -22,7 +22,7 @@
                     break;
 
                 case eERRORS.YEAR:
-                    Console.WriteLine("YEAR ERROR: Please specify the year of interest in decimal notation from 1582");
+                    Console.WriteLine("YEAR ERROR: Please specify the year of interest in decimal notation from 1582 to " + ushort.MaxValue.ToString());
                     break;
 
                 case eERRORS.FILE_LENGTH:

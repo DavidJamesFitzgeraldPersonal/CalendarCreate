@@ -7,14 +7,19 @@
 
         static int Main(string[] args)
         {
-            
             int status = 0;
-
+            ushort year = 0;
+            string fileName = "";
 #if TEST
             Test testRunner = new Test();
             testRunner.RunAll();
 #else
-            status = ParseUserInput(args);
+            status = ParseUserInput(args, out year, out fileName);
+
+            if( 0 == status)
+            {
+                Calendar calendar = new Calendar(year);
+            }
 #endif
             return status;
         }
@@ -27,11 +32,14 @@
          * \return int 0 if valid input, else NOT 0.
          */
 #if TEST
-        public static int ParseUserInput(string[] args)
+        public static int ParseUserInput(string[] args, out ushort year, out string fileName)
 #else
-        private static int ParseUserInput(string[] args)
+        private static int ParseUserInput(string[] args, out ushort year, out string fileName)
 #endif
         {
+            year = 0;
+            fileName = "";
+
             if ((null == args) || (2u != args.Length))
             {
                 return ErrorHandler.HandleError(ErrorHandler.eERRORS.USAGE);
@@ -40,11 +48,14 @@
             {
                 /* Ensure the year entered is in a usable range - Top End ?*/
                 int tempYear = 0;
-                if ((false == int.TryParse(args[0], out tempYear)) || (tempYear < LOWEST_DATE_ALLOWABLE))
+                if ((false == int.TryParse(args[0], out tempYear)) || (tempYear < LOWEST_DATE_ALLOWABLE) || (tempYear >= ushort.MaxValue))
                 {
                     return ErrorHandler.HandleError(ErrorHandler.eERRORS.YEAR);
                 }
-
+                else
+                {
+                    year = (ushort)tempYear;
+                }
                 /* Ensure the length of the filename is sensible - This is an abitrary limit! */
                 if ((args[1].Length > FILE_NAME_MAX_LENGTH) || (args[1].Length <= 0u))
                 {
