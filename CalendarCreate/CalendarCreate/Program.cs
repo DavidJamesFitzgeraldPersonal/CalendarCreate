@@ -18,7 +18,30 @@
 
             if( 0 == status)
             {
+                /* Create a new object to store the calendar data */
                 Calendar calendar = new Calendar(year);
+
+                /* Create or overwrite the file at the current path */
+                try
+                {
+                    File.Create(fileName + ".htm");
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                /*
+                HTMLBuilder builder = new HTMLBuilder(fileName);
+
+                CreateHTMLHeader();
+                foreach(Year year in calendar._years)
+                {
+                    CreateYearHeading();
+                    foreach(Month month in year)
+                    {
+                        CreateMonthTable();
+                    }
+                }*/
             }
 #endif
             return status;
@@ -52,10 +75,7 @@
                 {
                     return ErrorHandler.HandleError(ErrorHandler.eERRORS.YEAR);
                 }
-                else
-                {
-                    year = (ushort)tempYear;
-                }
+
                 /* Ensure the length of the filename is sensible - This is an abitrary limit! */
                 if ((args[1].Length > FILE_NAME_MAX_LENGTH) || (args[1].Length <= 0u))
                 {
@@ -71,6 +91,11 @@
                         return ErrorHandler.HandleError(ErrorHandler.eERRORS.FILE_NAME);
                     }
                 }
+
+                /* Populate outs */
+                year = (ushort)tempYear;
+                fileName = args[1];
+
             } //if (2 != args.Length)
             
             return 0;
