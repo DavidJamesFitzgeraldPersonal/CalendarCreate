@@ -52,7 +52,7 @@
 
                         builder.CreateFooter();
 
-                        Console.WriteLine("\r\nCalendar "+fileName+".htm created at "+fs.Name);
+                        Console.WriteLine("\r\nCalendar "+fileName+".htm created at "+fs.Name+"\r\n");
                         
                         fs.Close();
                     }

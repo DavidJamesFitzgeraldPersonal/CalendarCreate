@@ -89,12 +89,16 @@ namespace CalendarCreate
 
                 byte[] encodedBytes;
 
+                /* Set table style */
+                encodedBytes = Encoding.ASCII.GetBytes("<style>\r\ntable{border: 1px solid black}\r\ntable td{border: 1px solid black}\r\n</style>");
+                _fs.Write(encodedBytes);
+
                 /* Write table header */
-                encodedBytes = Encoding.ASCII.GetBytes("<table class=\"GeneratedTable\"style=\"width: 100px\">");
+                encodedBytes = Encoding.ASCII.GetBytes("<table style=\"width: 100px\">");
                 _fs.Write(encodedBytes);
 
                 /* Write table title */
-                encodedBytes = Encoding.ASCII.GetBytes("<thead>\r\n<tr>\r\n<th colspan=\""+colCount.ToString()+"\">" + title+"</th>\r\n</tr>\r\n</thead>");
+                encodedBytes = Encoding.ASCII.GetBytes("<thead>\r\n<tr>\r\n<th colspan=\""+(colCount+1).ToString()+"\" bgcolor=\"#CCFFCC\">" + title+"</th>\r\n</tr>\r\n</thead>");
                 _fs.Write(encodedBytes);
 
                 /* Write table body */
@@ -103,16 +107,64 @@ namespace CalendarCreate
 
                 for (ushort row = 0; row < rowCount; row++)
                 {
+                    /* Create column headers */
+                    if(0 == row)
+                    {
+                        /* Write table row */
+                        encodedBytes = Encoding.ASCII.GetBytes("<tr>");
+                        _fs.Write(encodedBytes);
+                        
+                        encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\">Wk</td>");
+                        _fs.Write(encodedBytes);
+                        encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\">Mo</td>");
+                        _fs.Write(encodedBytes);
+                        encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\">Tu</td>");
+                        _fs.Write(encodedBytes);
+                        encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\">We</td>");
+                        _fs.Write(encodedBytes);
+                        encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\">Th</td>");
+                        _fs.Write(encodedBytes);
+                        encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\">Fr</td>");
+                        _fs.Write(encodedBytes);
+                        encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#FFFFCC\">Sa</td>");
+                        _fs.Write(encodedBytes);
+                        encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#FFCC99\">Su</td>");
+                        _fs.Write(encodedBytes);
+
+                        /* Write table row end */
+                        encodedBytes = Encoding.ASCII.GetBytes("</tr>");
+                        _fs.Write(encodedBytes);
+                    }
+
                     /* Write table row */
                     encodedBytes = Encoding.ASCII.GetBytes("<tr>");
                     _fs.Write(encodedBytes);
 
-                    for (ushort col = 0; col < colCount; col++)
+                    for (ushort col = 0; col < colCount+1; col++)
                     {
-                        /* Write col entry */
-                        encodedBytes = Encoding.ASCII.GetBytes("<td>"+(++daysIndex).ToString()+"</td>");
-                        _fs.Write(encodedBytes);
-
+                        if (0 == col)
+                        {
+                            /* Write WK num entry */
+                            encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\"></td>");
+                            _fs.Write(encodedBytes);
+                        }
+                        else
+                        {
+                            /* Write col entry */
+                            if (6 == col)
+                            {
+                                encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#FFFFCC\">" + (++daysIndex).ToString() + "</td>");
+                            }
+                            else if(7 == col)
+                            {
+                                encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#FFCC99\">" + (++daysIndex).ToString() + "</td>");
+                            }
+                            else
+                            {
+                                encodedBytes = Encoding.ASCII.GetBytes("<td>" + (++daysIndex).ToString() + "</td>");
+                            }
+                            _fs.Write(encodedBytes);
+                        }
                         if(daysIndex >= days.Length){ break; }
                     }
                     
