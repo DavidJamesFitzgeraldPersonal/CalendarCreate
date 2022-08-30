@@ -35,23 +35,25 @@
                         builder.CreateDocTitle(calendar._years[0]._value.ToString());
                         foreach(Month m in calendar._years[0]._months)
                         {
-                            builder.CreateDocTable(m._name, 5, 7);
+                            builder.CreateDocTable(m._name, m._days);
                         }
 
                         builder.CreateDocTitle(calendar._years[1]._value.ToString());
                         foreach (Month m in calendar._years[1]._months)
                         {
-                            builder.CreateDocTable(m._name, 5, 7);
+                            builder.CreateDocTable(m._name, m._days);
                         }
 
                         builder.CreateDocTitle(calendar._years[2]._value.ToString());
                         foreach (Month m in calendar._years[2]._months)
                         {
-                            builder.CreateDocTable(m._name, 5, 7);
+                            builder.CreateDocTable(m._name, m._days);
                         }
 
                         builder.CreateFooter();
 
+                        Console.WriteLine("\r\nCalendar "+fileName+".htm created at "+fs.Name);
+                        
                         fs.Close();
                     }
 

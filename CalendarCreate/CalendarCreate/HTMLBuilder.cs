@@ -77,20 +77,24 @@ namespace CalendarCreate
             }
         }
 
-        public int CreateDocTable(string title, ushort rowCount, ushort colCount)
+        public int CreateDocTable(string title, int[] days)
         {
             if (null != _fs)
             {
                 while (!_fs.CanWrite) { }/* TODO - Possible endless loop */
 
+                ushort colCount = 7;
+                ushort rowCount = (ushort)Math.Ceiling((double)((double)days.Length / (double)colCount));
+                ushort daysIndex = 0;
+
                 byte[] encodedBytes;
 
                 /* Write table header */
-                encodedBytes = Encoding.ASCII.GetBytes("<table class=\"GeneratedTable\">");
+                encodedBytes = Encoding.ASCII.GetBytes("<table class=\"GeneratedTable\"style=\"width: 100px\">");
                 _fs.Write(encodedBytes);
 
                 /* Write table title */
-                encodedBytes = Encoding.ASCII.GetBytes("<thead>\r\n<tr>\r\n<th>"+title+ "</th>\r\n</tr>\r\n</thead>");
+                encodedBytes = Encoding.ASCII.GetBytes("<thead>\r\n<tr>\r\n<th colspan=\""+colCount.ToString()+"\">" + title+"</th>\r\n</tr>\r\n</thead>");
                 _fs.Write(encodedBytes);
 
                 /* Write table body */
@@ -106,13 +110,17 @@ namespace CalendarCreate
                     for (ushort col = 0; col < colCount; col++)
                     {
                         /* Write col entry */
-                        encodedBytes = Encoding.ASCII.GetBytes("<td>Cell</td>");
+                        encodedBytes = Encoding.ASCII.GetBytes("<td>"+(++daysIndex).ToString()+"</td>");
                         _fs.Write(encodedBytes);
+
+                        if(daysIndex >= days.Length){ break; }
                     }
                     
                     /* Write table row end */
                     encodedBytes = Encoding.ASCII.GetBytes("</tr>");
                     _fs.Write(encodedBytes);
+
+                    if (daysIndex >= days.Length) { break; }
                 }
 
                 /* Write table body end */
