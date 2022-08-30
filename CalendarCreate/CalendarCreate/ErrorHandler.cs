@@ -7,7 +7,8 @@
             USAGE = -1,
             YEAR = -2,
             FILE_LENGTH = -3,
-            FILE_NAME = -4
+            FILE_NAME = -4,
+            FILE_ACCESS = -5,
         };
 
         public static int HandleError(eERRORS type)
@@ -31,6 +32,10 @@
 
                 case eERRORS.FILE_NAME:
                     Console.WriteLine("FILE NAME ERROR: Please specify a valid file name");
+                    break;
+
+                case eERRORS.FILE_ACCESS:
+                    Console.WriteLine("FILE ACCESS ERROR: File system error");
                     break;
 
                 default:

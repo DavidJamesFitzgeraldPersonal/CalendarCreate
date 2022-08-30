@@ -24,24 +24,42 @@
                 /* Create or overwrite the file at the current path */
                 try
                 {
-                    File.Create(fileName + ".htm");
+                    FileStream fs = File.Create(fileName + ".htm");
+
+                    if(null != fs)
+                    {
+                        HTMLBuilder builder = new HTMLBuilder(fs);
+
+                        builder.CreateHeader();
+
+                        builder.CreateDocTitle(calendar._years[0]._value.ToString());
+                        foreach(Month m in calendar._years[0]._months)
+                        {
+                            builder.CreateDocTable(m._name, 5, 7);
+                        }
+
+                        builder.CreateDocTitle(calendar._years[1]._value.ToString());
+                        foreach (Month m in calendar._years[1]._months)
+                        {
+                            builder.CreateDocTable(m._name, 5, 7);
+                        }
+
+                        builder.CreateDocTitle(calendar._years[2]._value.ToString());
+                        foreach (Month m in calendar._years[2]._months)
+                        {
+                            builder.CreateDocTable(m._name, 5, 7);
+                        }
+
+                        builder.CreateFooter();
+
+                        fs.Close();
+                    }
+
                 }
                 catch(Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
                 }
-                /*
-                HTMLBuilder builder = new HTMLBuilder(fileName);
-
-                CreateHTMLHeader();
-                foreach(Year year in calendar._years)
-                {
-                    CreateYearHeading();
-                    foreach(Month month in year)
-                    {
-                        CreateMonthTable();
-                    }
-                }*/
             }
 #endif
             return status;

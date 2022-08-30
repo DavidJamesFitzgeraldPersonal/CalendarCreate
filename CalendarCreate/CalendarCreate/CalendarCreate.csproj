@@ -22,4 +22,8 @@
     <Optimize>False</Optimize>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="HTMLBuilder.cs~RF4fe89a.TMP" />
+  </ItemGroup>
+
 </Project>
