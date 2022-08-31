@@ -10,6 +10,7 @@
             int status = 0;
             ushort year = 0;
             string fileName = "";
+
 #if TEST
             Test testRunner = new Test();
             testRunner.RunAll();

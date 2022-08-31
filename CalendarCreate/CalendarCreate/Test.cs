@@ -36,6 +36,14 @@ namespace CalendarCreate
 
             YearCon_Test0();
             YearCon_Test1();
+
+            DetermineWeekDay_Test0_MONDAY();
+            DetermineWeekDay_Test1_TUESDAY();
+            DetermineWeekDay_Test2_WEDNESDAY();
+            DetermineWeekDay_Test3_THURSDAY();
+            DetermineWeekDay_Test4_FRIDAY();
+            DetermineWeekDay_Test5_SATURDAY();
+            DetermineWeekDay_Test6_SUNDAY();
             return 0;
         }
         #endregion
@@ -904,6 +912,148 @@ namespace CalendarCreate
             if (result)
             {
                 Console.WriteLine("     YearCon_Test1 - PASS");
+            }
+
+            return result;
+        }
+        #endregion
+        #region WEEKDAY CALC
+        private bool DetermineWeekDay_Test0_MONDAY()
+        {
+            bool result = false;
+
+            ushort day = 1;
+            ushort month = 4;
+            ushort year = 2019;
+
+            if (Day.eWEEKDAY.MONDAY == Day.DetermineWeekDay(day, month, year))
+            {
+                Console.WriteLine("     DetermineWeekDay_Test0_MONDAY - PASS");
+                result = true;
+            }
+            else
+            {
+                Console.WriteLine("     DetermineWeekDay_Test0_MONDAY - FAIL");
+            }
+
+            return result;
+        }
+        private bool DetermineWeekDay_Test1_TUESDAY()
+        {
+            bool result = false;
+
+            ushort day = 5;
+            ushort month = 5;
+            ushort year = 2026;
+
+            if (Day.eWEEKDAY.TUESDAY == Day.DetermineWeekDay(day, month, year))
+            {
+                Console.WriteLine("     DetermineWeekDay_Test1_TUESDAY - PASS");
+                result = true;
+            }
+            else
+            {
+                Console.WriteLine("     DetermineWeekDay_Test1_TUESDAY - FAIL");
+            }
+
+            return result;
+        }
+        private bool DetermineWeekDay_Test2_WEDNESDAY()
+        {
+            bool result = false;
+
+            ushort day = 3;
+            ushort month = 6;
+            ushort year = 1874;
+
+            if (Day.eWEEKDAY.WEDNESDAY == Day.DetermineWeekDay(day, month, year))
+            {
+                Console.WriteLine("     DetermineWeekDay_Test2_WEDNESDAY - PASS");
+                result = true;
+            }
+            else
+            {
+                Console.WriteLine("     DetermineWeekDay_Test2_WEDNESDAY - FAIL");
+            }
+
+            return result;
+        }
+        private bool DetermineWeekDay_Test3_THURSDAY()
+        {
+            bool result = false;
+
+            ushort day = 27;
+            ushort month = 11;
+            ushort year = 2008;
+
+            if (Day.eWEEKDAY.THURSDAY == Day.DetermineWeekDay(day, month, year))
+            {
+                Console.WriteLine("     DetermineWeekDay_Test3_THURSDAY - PASS");
+                result = true;
+            }
+            else
+            {
+                Console.WriteLine("     DetermineWeekDay_Test3_THURSDAY - FAIL");
+            }
+
+            return result;
+        }
+        private bool DetermineWeekDay_Test4_FRIDAY()
+        {
+            bool result = false;
+
+            ushort day = 7;
+            ushort month = 2;
+            ushort year = 1986;
+
+            if (Day.eWEEKDAY.FRIDAY == Day.DetermineWeekDay(day, month, year))
+            {
+                Console.WriteLine("     DetermineWeekDay_Test4_FRIDAY - PASS");
+                result = true;
+            }
+            else
+            {
+                Console.WriteLine("     DetermineWeekDay_Test4_FRIDAY - FAIL");
+            }
+
+            return result;
+        }
+        private bool DetermineWeekDay_Test5_SATURDAY()
+        {
+            bool result = false;
+
+            ushort day = 18;
+            ushort month = 4;
+            ushort year = 1970;
+
+            if (Day.eWEEKDAY.SATURDAY == Day.DetermineWeekDay(day, month, year))
+            {
+                Console.WriteLine("     DetermineWeekDay_Test5_SATURDAY - PASS");
+                result = true;
+            }
+            else
+            {
+                Console.WriteLine("     DetermineWeekDay_Test5_SATURDAY - FAIL");
+            }
+
+            return result;
+        }
+        private bool DetermineWeekDay_Test6_SUNDAY()
+        {
+            bool result = false;
+
+            ushort day = 5;
+            ushort month = 1;
+            ushort year = 3000;
+
+            if (Day.eWEEKDAY.SUNDAY == Day.DetermineWeekDay(day, month, year))
+            {
+                Console.WriteLine("     DetermineWeekDay_Test6_SUNDAY - PASS");
+                result = true;
+            }
+            else
+            {
+                Console.WriteLine("     DetermineWeekDay_Test6_SUNDAY - FAIL");
             }
 
             return result;

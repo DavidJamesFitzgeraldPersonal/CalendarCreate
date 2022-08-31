@@ -14,7 +14,7 @@
             _months = new Month[(ushort)Month.eMONTHS.COUNT];
             for (ushort i = 0; i < _months.Length; i++)
             {
-                _months[i] = new Month(i, _isLeap);
+                _months[i] = new Month(i, value, _isLeap);
             }
         }
 

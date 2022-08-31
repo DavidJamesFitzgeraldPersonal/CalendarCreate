@@ -77,7 +77,7 @@ namespace CalendarCreate
             }
         }
 
-        public int CreateDocTable(string title, int[] days)
+        public int CreateDocTable(string title, Day[] days)
         {
             if (null != _fs)
             {
@@ -85,6 +85,13 @@ namespace CalendarCreate
 
                 ushort colCount = 7;
                 ushort rowCount = (ushort)Math.Ceiling((double)((double)days.Length / (double)colCount));
+
+                /* Extra row will be needed if the 1st of the month is not a Monday as this is the first day displayed on the calendar */
+                if (days[0]._name != Day.eWEEKDAY.MONDAY)
+                {
+                    rowCount++;
+                }
+
                 ushort daysIndex = 0;
 
                 byte[] encodedBytes;
@@ -112,8 +119,7 @@ namespace CalendarCreate
                     {
                         /* Write table row */
                         encodedBytes = Encoding.ASCII.GetBytes("<tr>");
-                        _fs.Write(encodedBytes);
-                        
+                        _fs.Write(encodedBytes);                  
                         encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\">Wk</td>");
                         _fs.Write(encodedBytes);
                         encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\">Mo</td>");
@@ -142,6 +148,35 @@ namespace CalendarCreate
 
                     for (ushort col = 0; col < colCount+1; col++)
                     {
+                        ushort colOfInterest = 0;
+
+                        /* The Day class considers the 'start' of the week as Saturday.
+                         The calendar displays Monday as the first day so explicitly swap */
+                        switch ((days[daysIndex]._name))
+                        {
+                            case Day.eWEEKDAY.MONDAY:
+                                colOfInterest = 1;
+                                break;
+                            case Day.eWEEKDAY.TUESDAY:
+                                colOfInterest = 2;
+                                break;
+                            case Day.eWEEKDAY.WEDNESDAY:
+                                colOfInterest = 3;
+                                break;
+                            case Day.eWEEKDAY.THURSDAY:
+                                colOfInterest = 4;
+                                break;
+                            case Day.eWEEKDAY.FRIDAY:
+                                colOfInterest = 5;
+                                break;
+                            case Day.eWEEKDAY.SATURDAY:
+                                colOfInterest = 6;
+                                break;
+                            case Day.eWEEKDAY.SUNDAY:
+                                colOfInterest = 7;
+                                break;
+                        }
+
                         if (0 == col)
                         {
                             /* Write WK num entry */
@@ -150,22 +185,30 @@ namespace CalendarCreate
                         }
                         else
                         {
-                            /* Write col entry */
-                            if (6 == col)
+                            if (col == colOfInterest)
                             {
-                                encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#FFFFCC\">" + (++daysIndex).ToString() + "</td>");
-                            }
-                            else if(7 == col)
-                            {
-                                encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#FFCC99\">" + (++daysIndex).ToString() + "</td>");
+                                /* Write col entry */
+                                if (6 == col)
+                                {
+                                    encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#FFFFCC\">" + days[daysIndex]._value.ToString() + "</td>");
+                                }
+                                else if (7 == col)
+                                {
+                                    encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#FFCC99\">" + days[daysIndex]._value.ToString() + "</td>");
+                                }
+                                else
+                                {
+                                    encodedBytes = Encoding.ASCII.GetBytes("<td>" + days[daysIndex]._value.ToString() + "</td>");
+                                }
+                                daysIndex++;                       
                             }
                             else
                             {
-                                encodedBytes = Encoding.ASCII.GetBytes("<td>" + (++daysIndex).ToString() + "</td>");
+                                encodedBytes = Encoding.ASCII.GetBytes("<td> </td>");
                             }
                             _fs.Write(encodedBytes);
+                            if (daysIndex >= days.Length) { break; }
                         }
-                        if(daysIndex >= days.Length){ break; }
                     }
                     
                     /* Write table row end */

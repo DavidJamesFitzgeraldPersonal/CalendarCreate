@@ -22,15 +22,21 @@
 
         public ushort _value { get; }
         public string _name { get; }
-        public int[] _days { get; }
+        public Day[] _days { get; }
 
-        public Month(ushort index, bool isLeapYear)
+        public Month(ushort index, ushort year, bool isLeapYear)
         {
             _value = index;
 
             _name = ((eMONTHS)index).ToString();
 
-            _days = new int[GetDaysInMonth((eMONTHS)index, isLeapYear)];
+            ushort weekDay = (ushort)Day.DetermineWeekDay(1, (ushort)(index + 1), year);
+
+            _days = new Day[GetDaysInMonth((eMONTHS)index, isLeapYear)];
+            for(ushort i = 0; i < _days.Length; i++)
+            {
+                _days[i] = new Day((ushort)(i+1u), (ushort)((weekDay++)%7));
+            }
         }
 
         /**
