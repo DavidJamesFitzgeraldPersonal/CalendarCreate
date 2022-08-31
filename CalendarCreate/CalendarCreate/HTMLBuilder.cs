@@ -4,6 +4,7 @@ namespace CalendarCreate
 {
     public class HTMLBuilder
     {
+        private ushort weekNumber;
         private FileStream _fs;
         public HTMLBuilder(FileStream fs)
         {
@@ -62,6 +63,8 @@ namespace CalendarCreate
 
         public int CreateDocTitle(string title)
         {
+            weekNumber = 1;
+
             if (null != _fs)
             {
                 while (!_fs.CanWrite) { }/* TODO - Possible endless loop */
@@ -114,6 +117,8 @@ namespace CalendarCreate
 
                 for (ushort row = 0; row < rowCount; row++)
                 {
+                    bool newWeek = false;
+
                     /* Create column headers */
                     if(0 == row)
                     {
@@ -173,6 +178,7 @@ namespace CalendarCreate
                                 colOfInterest = 6;
                                 break;
                             case Day.eWEEKDAY.SUNDAY:
+                                newWeek = true;
                                 colOfInterest = 7;
                                 break;
                         }
@@ -180,7 +186,7 @@ namespace CalendarCreate
                         if (0 == col)
                         {
                             /* Write WK num entry */
-                            encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\"></td>");
+                            encodedBytes = Encoding.ASCII.GetBytes("<td bgcolor=\"#E6E6E6\">" + (weekNumber).ToString() + "</td>");
                             _fs.Write(encodedBytes);
                         }
                         else
@@ -216,6 +222,11 @@ namespace CalendarCreate
                     _fs.Write(encodedBytes);
 
                     if (daysIndex >= days.Length) { break; }
+
+                    if(newWeek)
+                    {
+                        weekNumber++;
+                    }
                 }
 
                 /* Write table body end */

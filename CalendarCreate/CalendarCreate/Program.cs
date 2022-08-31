@@ -3,7 +3,7 @@
     class Program
     {
         const int FILE_NAME_MAX_LENGTH = 100; /*TODO - Move me to a file handler class*/
-        const int LOWEST_DATE_ALLOWABLE = 1582;
+        const int LOWEST_DATE_ALLOWABLE = 1583;
 
         static int Main(string[] args)
         {
